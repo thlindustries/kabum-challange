@@ -8,7 +8,7 @@ import Separator from 'components/Atoms/Separator';
 // import jfyLogo from 'assets/images/jfylogomini.png';
 
 import {
-  Container, LogoContent, Logo, UserContainer,
+  Container, LogoContent, UserContainer,
 } from './styles';
 
 interface HeaderProps {

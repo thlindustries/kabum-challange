@@ -22,6 +22,7 @@
       "@typescript-eslint"
   ],
   "rules": {
+    "no-console":"off",
     "semi":"off",
     "@typescript-eslint/no-extra-semi": "off",
     "indent": [
