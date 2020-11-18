@@ -21,8 +21,7 @@ const toastTypes = {
   `,
 };
 
-// eslint-disable-next-line
-export const Container = styled(animated.div)<ToastProps>`
+export const Container = styled(animated.div) <ToastProps>`
   width: 360px;
 
   & + div {

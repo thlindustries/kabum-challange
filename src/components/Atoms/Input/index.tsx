@@ -15,6 +15,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   icon?: React.ComponentType<IconBaseProps>;
   containerStyle?: object;
+  enabled?: boolean;
+  noEye?: boolean;
   callback?(inputRef: HTMLInputElement): void;
 }
 
@@ -22,6 +24,8 @@ const Input: React.FC<InputProps> = ({
   name,
   containerStyle = {},
   icon: Icon,
+  enabled = true,
+  noEye = false,
   callback,
   ...rest
 }) => {
@@ -36,7 +40,7 @@ const Input: React.FC<InputProps> = ({
 
   const handleInputBlur = useCallback(() => {
     setFocus(false);
-    // o perador !! é pra ver se existe algum valor na variável
+    // o operador !! é pra ver se existe algum valor na variável
     setHasValue(!!inputReference.current?.value);
   }, []);
 
@@ -61,9 +65,7 @@ const Input: React.FC<InputProps> = ({
     setShowPassword(!showPassword);
 
     if (inputReference.current) {
-      showPassword
-        ? (inputReference.current.type = 'text')
-        : (inputReference.current.type = 'password');
+      showPassword ? inputReference.current.type = 'text' : inputReference.current.type = 'password';
     }
   }, [showPassword]);
 
@@ -90,6 +92,7 @@ const Input: React.FC<InputProps> = ({
       isFocused={focus}
       hasValue={hasValue}
       data-testid="input-container"
+      enabled={enabled}
     >
       {Icon && <Icon size={20} />}
       <input
@@ -105,7 +108,7 @@ const Input: React.FC<InputProps> = ({
           <FiAlertCircle color="#c53030" size={20} />
         </Error>
       )}
-      {name === 'password' && (
+      {(name === 'password' && !noEye) && (
         <EyePassword onClick={handleShowPassword}>
           {showPassword && <FiEye size={20} />}
           {!showPassword && <FiEyeOff size={20} />}

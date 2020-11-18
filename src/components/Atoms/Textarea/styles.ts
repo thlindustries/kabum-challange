@@ -5,29 +5,27 @@ interface ContainerProps {
   isFocused: boolean;
   hasValue: boolean;
   hasError: boolean;
-  enabled: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
-  background: #7a8095;
+  background: #fff;
   border-radius: 10px;
 
   display: flex;
-  align-items: center;
+  /* align-items: center; */
 
   padding: 16px;
-  width: 100%;
+  width: 400px;
+  height: 200px;
 
-  border: 2px solid #7a8095;
-  color: white;
-
+  border: 2px solid #232129;
+  color: #666360;
 
   & + div {
     margin-top: 8px;
   }
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 
-  transition: border 0.4s, box-shadow 0.4s;
+  transition: border 0.3s;
 
   ${(props) => props.hasError
     && css`
@@ -36,31 +34,24 @@ export const Container = styled.div<ContainerProps>`
 
   ${(props) => props.isFocused
     && css`
-      border: 2px solid #ff4f1d;
-      color: #fa8d6e;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+      border: 2px solid #1266cb;
+      color: #1266cb;
     `}
 
   ${(props) => props.hasValue
     && css`
-      border: 2px solid #ff4f1d;
-      color: #fa8d6e;
+      border: 2px solid #1266cb;
+      color: #1266cb;
     `}
 
-  ${(props) => !props.enabled
-    && css`
-      pointer-events: none;
-      opacity: 0.5;
-    `}
-
-  input {
+  textarea {
     background: transparent;
     flex: 1;
     border: 0;
 
-    color: #fff;
+    color: #000;
     &::placeholder {
-      color: #fff;
+      color: #666360;
     }
 
   /* border: solid 1px #000; */
@@ -71,14 +62,12 @@ export const Container = styled.div<ContainerProps>`
   svg {
     margin-right: 16px;
   }
-
-  @media (max-width: 900px) {
-    width: 300px !important;
-  }
 `;
 
 export const Error = styled(Tooltip)`
   height: 20px;
+  /* margin-left: 16px; */
+  /* border: solid 1px #000; */
 
   svg {
     margin-right: 0px;
@@ -91,22 +80,5 @@ export const Error = styled(Tooltip)`
     &::before {
       border-color: #c53030 transparent;
     }
-  }
-`;
-
-export const EyePassword = styled.div`
-  height: 20px;
-
-  svg {
-    margin-right: 0px;
-    color: #b4bad4;
-
-    transition: color 0.4s;
-
-    &:hover{
-      cursor: pointer;
-      color: #fa8d6e;
-    }
-
   }
 `;

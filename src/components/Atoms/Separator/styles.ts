@@ -2,32 +2,34 @@ import styled, { css } from 'styled-components';
 
 interface ContainerProps {
   type?: 'vertical' | 'horizontal';
+  customHeight?: number;
+  customWidth?: number;
+  customColor?: string;
 }
 
 export const Container = styled.div<ContainerProps>`
-  /* background: linear-gradient(black, #707070); */
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(147, 147, 147,0.6);
 
-  margin-bottom: auto;
   margin-left: 20px;
 
-  ${(props) => props.type === 'vertical'
-    && css`
+  ${(props) => props.type === 'vertical' && (
+    css`
       width: 2px;
-      height: 60%;
-    `}
+      height: ${props.customHeight}%;
+    `
+  )}
 
-  ${(props) => props.type === 'horizontal'
-    && css`
+  ${(props) => props.type === 'horizontal' && (
+    css`
       height: 1px;
-      width: 100%;
+      width: ${props.customWidth}%;
       margin: 0;
 
-      background: linear-gradient(
-        90deg,
-        rgba(157, 163, 186, 0.22) 0%,
-        rgba(157, 163, 186, 1) 50%,
-        rgba(157, 163, 186, 0.22) 100%
-      );
-    `}
+      background: linear-gradient(90deg, rgba(157, 163, 186,0.22) 0%, rgba(157, 163, 186,1) 50%, rgba(157, 163, 186,0.22) 100%);
+    `
+  )}
+
+  ${(props) => props.customColor && css`
+    background: ${props.customColor};
+  `}
 `;

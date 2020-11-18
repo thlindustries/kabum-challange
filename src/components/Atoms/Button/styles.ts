@@ -6,24 +6,27 @@ interface ContainerProps {
 }
 
 export const Container = styled.button<ContainerProps>`
-  background: #04d361;
-  border-radius: 8px;
-  height: 60px;
+  background: #ff6033;
+  border-radius: 10px;
+  height: 56px;
   border: 0;
   padding: 0 16px;
   width: 100%;
 
-  color: #fff;
   font-weight: 500;
 
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+
+  margin-top: 16px;
   transition: background-color 0.2s;
 
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 16px;
   font-weight: bold;
+  color: #fff;
 
   &:hover {
-    background: ${shade(0.4, '#04d361')};
+    background: ${shade(0.4, '#ff6033')};
     cursor: pointer;
   }
 

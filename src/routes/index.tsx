@@ -10,6 +10,8 @@ import SignIn from 'pages/SignIn';
 import SignUp from 'pages/SignUp';
 import UpdateUser from 'pages/UpdateUser';
 
+import { AppContainer } from 'styles/AppStyles';
+
 import { useAuth } from 'hooks/auth';
 import Route from './Route';
 
@@ -19,22 +21,23 @@ const Routes: React.FC = () => {
 
   const HeaderTabs = useMemo(
     () => [
-      { key: 'search', value: 'Pesquisar' },
-      { key: 'favorites', value: 'Favoritos' },
+      { key: 'dashboard', value: 'Dashboard' },
     ],
     [],
   );
   return (
-    <>
+    <AppContainer>
       {user && <Header actualTab={tab} tabs={HeaderTabs} changeTab={setTab} />}
+      <Header actualTab={tab} tabs={HeaderTabs} changeTab={setTab} />
       <Switch>
         <Route path="/" component={SignIn} exact />
         <Route path="/signup" component={SignUp} />
-        <Route path="/updateuser" component={UpdateUser} isPrivate />
-        <Route path="/dashboard" component={Dashboard} isPrivate />
+        <Route path="/updateuser/:id" component={UpdateUser} />
+        <Route path="/dashboard" component={Dashboard} />
       </Switch>
+      <Footer />
       {user && <Footer />}
-    </>
+    </AppContainer>
   );
 };
 

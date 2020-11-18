@@ -24,7 +24,7 @@ export const Container = styled.div`
 
   transition: width 0.2s;
 
-  @media (max-width: 1270px) {
+  @media (max-width: 1270px){
     width: 120px;
     display: block;
   }
@@ -36,6 +36,7 @@ export const MenuWrapper = styled.div<WrapperProps>`
   justify-content: space-between;
   align-items: center;
 
+  width: 100%;
   height: 180px;
 
   margin-left: auto;
@@ -49,15 +50,16 @@ export const MenuWrapper = styled.div<WrapperProps>`
   }
 
   p {
-    color: #fff;
+    color: #E9EAED;
 
     transition: color 0.4s;
 
     font-family: 'Fira Sans', sans-serif;
+    margin-left: auto;
 
     &:hover {
       cursor: pointer;
-      color: ${shade(0.2, '#fff')};
+      color: ${shade(0.4, '#E9EAED')};
     }
   }
 
@@ -67,61 +69,71 @@ export const MenuWrapper = styled.div<WrapperProps>`
 
   transition: height 0.4s;
 
-  @media (max-width: 1270px) {
+  @media (max-width: 1270px){
     overflow: hidden;
     margin-top: -20px;
 
-    ${(props) => !props.isCollapsed
-      && css`
-        position: absolute;
+    p{
+      margin-right: auto;
+    }
+    ${(props) => !props.isCollapsed && css`
+      position: absolute;
 
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-        background: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.08);
 
-        width: 160px;
-        height: 200px;
+      width: 160px;
+      height: 100px;
 
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        p {
-          margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      p{
+        margin-bottom: 16px;
+
+        &::before{
+          content: ">  ";
+          margin-left: -12px;
         }
-      `}
-    ${(props) => props.isCollapsed
-      && css`
-        position: absolute;
+      }
 
-        width: auto;
-        height: 60px;
+    `}
+    ${(props) => props.isCollapsed && css`
+      position: absolute;
 
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+      width: auto;
+      height: 60px;
 
-        .logo-option {
-          display: none;
-          margin-bottom: 12px;
-        }
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
 
-        .collapsed-icon {
-          display: block;
-        }
-      `}
+      .logo-option{
+        display: none;
+        margin-bottom: 12px;
+      }
+
+      .collapsed-icon{
+        display: block;
+      }
+      p{
+        text-align: center;
+      }
+    `}
   }
 `;
 
 export const CollapsedMenu = styled.div`
-  .bar {
+  .bar{
     display: none;
-    @media (max-width: 1270px) {
+    @media(max-width: 1270px){
       width: 44px;
       height: 2px;
       background: white;
 
-      display: flex;
-      flex-direction: column;
+      display:flex;
+      flex-direction:column;
 
       margin-bottom: 12px;
 
@@ -132,11 +144,10 @@ export const CollapsedMenu = styled.div`
 
 export const Option = styled.p<OptionProps>`
   font-size: 16px;
-  margin-right: 24px;
 
   ${(props) => props.tabIsSelected
     && css`
-      font-size: 18px;
-      border-bottom: 1.4px solid #fff;
-    `}
+    font-size: 18px;
+    border-bottom: 1.4px solid #fff;
+  `}
 `;
