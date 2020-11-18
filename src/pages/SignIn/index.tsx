@@ -1,4 +1,3 @@
-import Axios from 'axios';
 import React, {
   useEffect, useRef, useCallback, useState,
 } from 'react';
@@ -13,6 +12,8 @@ import Loading from 'components/Atoms/Loading';
 
 import nlLogo from 'assets/kabum-logo.png';
 
+import api from 'services/api';
+// import Axios from 'axios';
 import {
   Container, ContentWrapper, LoginWrapper, FormWrapper, SignUp, StyledButton,
 } from './styles';
@@ -25,11 +26,13 @@ const SignIn: React.FC = () => {
   const handleLogin = useCallback(async () => {
     setIsLogging(true);
     // await signIn({ username: 'thiago.coradi', password: '123456' });
+    api.get('/user').then((response) => console.log(response.data));
+    // Axios.post('http://localhost:8054/user').then((response) => console.log(response.data));
     setIsLogging(false);
   }, []);
 
   useEffect(() => {
-    Axios.get('http://localhost:8080/user').then((response) => console.log(response.data))
+    // Axios.get('http://localhost:8080/user').then((response) => console.log(response.data))
   }, []);
 
   return (
