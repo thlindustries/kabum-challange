@@ -36,9 +36,11 @@ export const ContentWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  padding: 20px 300px;
+  padding: 20px 140px;
   
   font-family: 'Raleway';
+
+  max-width:1200px;
 `;
 
 export const Content = styled.div`
