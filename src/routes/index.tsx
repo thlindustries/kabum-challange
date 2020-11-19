@@ -28,14 +28,12 @@ const Routes: React.FC = () => {
   return (
     <AppContainer>
       {user && <Header actualTab={tab} tabs={HeaderTabs} changeTab={setTab} />}
-      <Header actualTab={tab} tabs={HeaderTabs} changeTab={setTab} />
       <Switch>
         <Route path="/" component={SignIn} exact />
         <Route path="/signup" component={SignUp} />
-        <Route path="/updateuser/:id" component={UpdateUser} />
-        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/updateuser/:id" component={UpdateUser} isPrivate />
+        <Route path="/dashboard" component={Dashboard} isPrivate />
       </Switch>
-      <Footer />
       {user && <Footer />}
     </AppContainer>
   );

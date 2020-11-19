@@ -2,6 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 
+import { useAuth } from 'hooks/auth';
+
 import CollapsibleMenu from 'components/Atoms/CollapsibleMenu';
 import Separator from 'components/Atoms/Separator';
 
@@ -26,6 +28,7 @@ const Header: React.FC<HeaderProps> = ({
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const { push } = useHistory();
+  const { signOut } = useAuth();
 
   const handleChangeTab = useCallback(
     (tab: string) => {
@@ -43,8 +46,8 @@ const Header: React.FC<HeaderProps> = ({
   }, [isCollapsed]);
 
   const handleSignOut = useCallback(() => {
-    console.log('saiu');
-  }, []);
+    signOut();
+  }, [signOut]);
 
   return (
     <>

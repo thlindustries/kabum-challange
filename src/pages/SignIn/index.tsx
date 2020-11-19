@@ -1,38 +1,74 @@
 import React, {
-  useEffect, useRef, useCallback, useState,
+  useRef, useCallback, useState,
 } from 'react';
 import { FiUser, FiLock } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import * as Yup from 'yup';
 
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
+
+import { useAuth } from 'hooks/auth';
+import { useToast } from 'hooks/toast';
+
+import getValidationErrors from 'utils/getValidationErrors';
 
 import Input from 'components/Atoms/Input';
 import Loading from 'components/Atoms/Loading';
 
 import nlLogo from 'assets/kabum-logo.png';
 
-import api from 'services/api';
-// import Axios from 'axios';
 import {
   Container, ContentWrapper, LoginWrapper, FormWrapper, SignUp, StyledButton,
 } from './styles';
 
+interface DataFormInfo {
+  username: string;
+  password: string;
+}
+
 const SignIn: React.FC = () => {
   const [isLogging, setIsLogging] = useState(false);
 
+  const { signIn } = useAuth();
+  const { addToast } = useToast();
+
   const formRef = useRef<FormHandles>(null);
 
-  const handleLogin = useCallback(async () => {
+  const handleLogin = useCallback(async (data: DataFormInfo) => {
     setIsLogging(true);
-    // await signIn({ username: 'thiago.coradi', password: '123456' });
-    api.get('/user').then((response) => console.log(response.data));
-    // Axios.post('http://localhost:8054/user').then((response) => console.log(response.data));
-    setIsLogging(false);
-  }, []);
+    try {
+      formRef.current?.setErrors({});
 
-  useEffect(() => {
-    // Axios.get('http://localhost:8080/user').then((response) => console.log(response.data))
+      const schema = Yup.object().shape({
+        username: Yup.string().required('Email obrigatório!'),
+        password: Yup.string().required('Senha obrigatória!'),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      await signIn({
+        email: data.username,
+        password: data.password,
+      });
+
+      window.location.href = '/dashboard';
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(err);
+
+        formRef.current?.setErrors(errors);
+      } else {
+        addToast({
+          type: 'error',
+          title: 'Erro ao cadastrar usuário',
+          description: 'Oops... parece que algo deu errado, confira se seu servidor está rodando!',
+        });
+        setIsLogging(false);
+      }
+    }
   }, []);
 
   return (

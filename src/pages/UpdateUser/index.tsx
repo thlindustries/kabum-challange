@@ -11,6 +11,7 @@ import Input from 'components/Atoms/Input';
 import Loading from 'components/Atoms/Loading';
 import Separator from 'components/Atoms/Separator';
 
+import api from 'services/api';
 import {
   Container, ContentWrapper, FormWrapper, InputsContainer, StyledButton,
 } from './styles';
@@ -23,6 +24,7 @@ interface DataFormInfo{
   username: string;
   email: string;
   password: string;
+  oldPassword: string;
 }
 
 const UpdateUser: React.FC = () => {
@@ -40,16 +42,26 @@ const UpdateUser: React.FC = () => {
     try {
       console.log(data);
 
-      addToast({
-        type: 'success',
-        title: 'Boa!',
-        description: 'Informações alteradas com sucesso',
-      });
+      api.put('/user', {
+        email: data.email,
+        name: data.username,
+        oldPassword: data.oldPassword,
+        password: data.password,
+      }).then((response) => {
+        console.log(response.data);
+
+        addToast({
+          type: 'success',
+          title: 'Boa!',
+          description: 'Informações alteradas com sucesso',
+        });
+      })
+
       setIsLoading(false);
     } catch (err) {
       addToast({
         type: 'error',
-        title: 'Erro ao cadastrar usuário',
+        title: 'Erro ao alterar informações do usuário',
         description: 'Oops... parece que algo deu errado, confira se seu servidor está rodando!',
       });
 
@@ -79,11 +91,19 @@ const UpdateUser: React.FC = () => {
                 enabled={!isLoading}
               />
               <Input
+                name="oldPassword"
+                noEye
+                icon={FiLock}
+                type="password"
+                placeholder="Sua senha atual"
+                enabled={!isLoading}
+              />
+              <Input
                 name="password"
                 noEye
                 icon={FiLock}
                 type="password"
-                placeholder="Sua senha"
+                placeholder="Sua nova senha"
                 enabled={!isLoading}
               />
             </InputsContainer>

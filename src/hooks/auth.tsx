@@ -1,5 +1,5 @@
 import React, {
-  createContext, useCallback, useState, useContext, useMemo,
+  createContext, useCallback, useState, useContext,
 } from 'react';
 
 import UserInterface from 'models/User';
@@ -14,7 +14,7 @@ interface AuthContextData {
 }
 
 interface Login {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -44,29 +44,23 @@ export const AuthProvider: React.FC = ({ children }) => {
     return {} as UserLoginData;
   });
 
-  const defaultUserProfileImage = useMemo<string>(() => 'https://nextlevelimagesprofile.s3-sa-east-1.amazonaws.com/defaultUser.png', []);
-
-  const signIn = useCallback(async ({ username, password }) => {
-    const response = await api.post<LoginRequestData>(
-      `${process.env.REACT_APP_API_URL}/login`,
+  const signIn = useCallback(async ({ email, password }) => {
+    const response = await api.post<LoginRequestData[]>(
+      `${process.env.REACT_APP_DEV_API_URL}/signin`,
       {
-        username,
+        email,
         password,
       },
     );
 
-    const { user } = response.data;
-
-    user.imageurl = user.imageurl !== ' ' || '' ? user.imageurl : defaultUserProfileImage;
+    const [user] = response.data;
 
     if (user !== undefined) {
       localStorage.setItem('@Kabum:user', JSON.stringify(user));
     }
 
-    setData({
-      user,
-    });
-  }, [defaultUserProfileImage]);
+    setData(user);
+  }, []);
 
   const signOut = useCallback(() => {
     localStorage.removeItem('@Kabum:token');

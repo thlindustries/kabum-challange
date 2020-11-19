@@ -1,24 +1,35 @@
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FiEdit2, FiX } from 'react-icons/fi';
+import { useToast } from 'hooks/toast';
 
+import api from 'services/api';
 import { Container, ItemData, OptionsWrapper } from './styles';
 
 interface TableLineProps {
   item : {[key: string]: number | string};
+  refreshData?(): Promise<void>;
 }
 
-const TableLine: React.FC<TableLineProps> = ({ item }) => {
+const TableLine: React.FC<TableLineProps> = ({ item, refreshData }) => {
   const { push } = useHistory();
+  const { addToast } = useToast();
 
   const handleLineAction = useCallback((action: string, id: number | string) => {
     switch (action) {
     case 'edit':
       push(`/updateuser/${id}`)
-      console.log(`voce quer editar o usuario de id ${id}?`);
       break;
     case 'delete':
-      console.log(`voce quer deletar o usuario de id ${id}?`);
+      api.delete(`/user?id=${id}`).then((response) => {
+        console.log(response.data);
+        refreshData && refreshData();
+        addToast({
+          type: 'success',
+          title: 'Usuário removido',
+          description: 'Hm... você removeu MESMO o usuário :/',
+        });
+      })
       break;
     default:
       break;
