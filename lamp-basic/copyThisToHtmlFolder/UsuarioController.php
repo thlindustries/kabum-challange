@@ -54,6 +54,7 @@ class UsuarioController
 
     public function signInController() {
       $entityBody = json_decode(file_get_contents('php://input'),true);
+      echo $entityBody;
       echo json_encode((new UsuarioClass())->signInClass($entityBody));
     }
 
